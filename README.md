@@ -1,88 +1,82 @@
-# Cloud-Native 微服务示例项目
+# Cloud-Native 学习项目
 
-本项目演示了基于 Go、gRPC、Consul 的服务注册与发现，包含服务注册端（service-register）和服务发现/网关端（service-discover）。
+这是一个用于学习云原生技术的项目集合，包含多个微服务和网关技术的演示。
 
-## 目录结构
+## 项目结构
 
 ```
 Cloud-Native/
-├── go.mod
-├── go.sum
-├── service-register/   # 服务注册与健康检查
-│   ├── main.go
-│   └── ...
-└── service-discover/   # 服务发现与 HTTP 网关
-    ├── main.go
-    └── ...
+├── kong-demo-app/          # Kong 网关演示项目
+│   ├── main.go            # Go HTTP 服务
+│   ├── go.mod             # Go 模块文件
+│   ├── Dockerfile         # Docker 构建文件
+│   └── README.md          # Kong 项目说明
+├── kong-example/           # Kong 网关示例
+├── consul-example/         # Consul 服务发现示例
+│   ├── service-discover/   # 服务发现
+│   ├── service-register/   # 服务注册
+│   └── README.md          # Consul 项目说明
+└── README.md              # 项目总览
 ```
 
----
+## 技术栈
 
-## 依赖环境
+- **API 网关**: Kong
+- **服务发现**: Consul
+- **编程语言**: Go
+- **容器化**: Docker
+- **微服务架构**: 分布式系统
 
-- Go 1.18+
-- Consul 1.9+（本地或远程均可）
-- 已安装依赖：`go mod tidy`
+## 快速开始
 
----
-
-## 启动 Consul
-
-本地启动（默认端口 8500）：
+### 1. Kong 网关演示
 
 ```bash
-consul agent -dev
-```
-
----
-
-## 启动服务注册端（可多实例）
-
-分别在不同终端运行：
-
-```bash
-cd service-register
-go run main.go -id=hello-service-1 -port=50051
-go run main.go -id=hello-service-2 -port=50052
-go run main.go -id=hello-service-3 -port=50053
-go run main.go -id=hello-service-4 -port=50054
-```
-
----
-
-## 启动服务发现/HTTP 网关
-
-```bash
-cd service-discover
+cd kong-demo-app
 go run main.go
 ```
 
----
+访问：
+- 服务：http://localhost:3000
+- 网关：http://localhost:8000/demo
 
-## 通过 HTTP 网关访问服务
-
-多次执行，观察后端 gRPC 服务实例轮询变化：
+### 2. Consul 服务发现
 
 ```bash
-curl "http://localhost:8080/hello?name=ConsulClient"
+cd consul-example
+# 查看具体说明
+cat README.md
 ```
 
----
+## 学习目标
 
-## 主要功能说明
+1. **API 网关技术**
+   - Kong 网关的安装和配置
+   - 服务注册和路由管理
+   - 插件系统使用
 
-- **服务注册**：服务启动时自动注册到 Consul，并支持健康检查与自动注销。
-- **服务发现**：HTTP 网关通过 Consul 动态发现 gRPC 服务，采用 round_robin 负载均衡。
-- **健康检查**：Consul 定期检查服务健康，异常自动剔除。
+2. **服务发现**
+   - Consul 集群搭建
+   - 服务注册和发现
+   - 健康检查和负载均衡
 
----
+3. **微服务架构**
+   - 服务间通信
+   - 分布式系统设计
+   - 容器化部署
 
-## 参考
+## 开发环境
 
-- [Consul 官方文档](https://www.consul.io/docs)
-- [gRPC 官方文档](https://grpc.io/docs/)
-- [Gin 官方文档](https://gin-gonic.com/)
+- macOS 15.5.0
+- Go 1.21+
+- Docker Desktop
+- Kong Gateway
+- Consul
 
----
+## 贡献
 
-如需更多帮助或有定制需求，欢迎随时提问！ 
+欢迎提交 Issue 和 Pull Request 来改进这个学习项目。
+
+## 许可证
+
+MIT License 
