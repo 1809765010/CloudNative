@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache-service-nodeport-lb
+  namespace: cache-service
+  labels:
+    app: cache-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
+    nodePort: 30081
+    protocol: TCP
+    name: http
+  - port: 9000
+    targetPort: 9000
+    nodePort: 30091
+    protocol: TCP
+    name: grpc
+  selector:
+    app: cache-service
+  # 负载均衡策略配置
+  sessionAffinity: ClientIP  # 会话亲和性：ClientIP, None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 会话超时时间（秒）
+  # 外部流量策略
+  externalTrafficPolicy: Local  # Local 或 Cluster
+  # 内部流量策略  
+  internalTrafficPolicy: Local  # Local 或 Cluster 

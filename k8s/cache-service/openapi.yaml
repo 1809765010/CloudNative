@@ -1,0 +1,97 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: CacheService API
+    version: 0.0.1
+paths:
+    /api/v1/data:
+        post:
+            tags:
+                - CacheService
+            description: 设置数据接口
+            operationId: CacheService_SetData
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.cache.v1.SetDataRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.cache.v1.SetDataReply'
+    /api/v1/data/{key}:
+        get:
+            tags:
+                - CacheService
+            description: 获取数据接口
+            operationId: CacheService_GetData
+            parameters:
+                - name: key
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.cache.v1.GetDataReply'
+    /health:
+        get:
+            tags:
+                - CacheService
+            description: 健康检查接口
+            operationId: CacheService_HealthCheck
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.cache.v1.HealthCheckReply'
+components:
+    schemas:
+        api.cache.v1.GetDataReply:
+            type: object
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+                source:
+                    type: string
+                pod:
+                    type: string
+        api.cache.v1.HealthCheckReply:
+            type: object
+            properties:
+                status:
+                    type: string
+                timestamp:
+                    type: string
+                version:
+                    type: string
+        api.cache.v1.SetDataReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+        api.cache.v1.SetDataRequest:
+            type: object
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+tags:
+    - name: CacheService

@@ -1,0 +1,16 @@
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 10s
+  grpc:
+    addr: 0.0.0.0:9000
+    timeout: 10s
+data:
+  database:
+    driver: mysql
+    source: root:mysql123456@tcp(127.0.0.1:3306)/test?parseTime=True&loc=Local
+  redis:
+    # Redis代理配置
+    addr: "127.0.0.1:7777"
+    read_timeout: 5s
+    write_timeout: 5s

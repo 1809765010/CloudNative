@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cache-service-config
+  namespace: cache-service
+data:
+  config.yaml: |
+    server:
+      http:
+        addr: 0.0.0.0:8000
+        timeout: 10s
+      grpc:
+        addr: 0.0.0.0:9000
+        timeout: 10s
+    data:
+      database:
+        driver: mysql
+        source: root:mysql123456@tcp(host.docker.internal:3306)/testdb?parseTime=True&loc=Local&charset=utf8mb4&collation=utf8mb4_unicode_ci
+      redis:
+        addr: "host.docker.internal:7777"
+        read_timeout: 5s
+        write_timeout: 5s 

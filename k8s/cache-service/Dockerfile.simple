@@ -1,0 +1,7 @@
+FROM scratch
+
+COPY bin/cache-service /server
+
+EXPOSE 8000 9000
+
+CMD ["/server", "-conf", "/data/conf/config.yaml"] 

@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package api.cache.v1;
+
+option go_package = "cache-service/api/cache/v1;v1";
+
+import "google/api/annotations.proto";
+
+service CacheService {
+  // 获取数据接口
+  rpc GetData (GetDataRequest) returns (GetDataReply) {
+    option (google.api.http) = {
+      get: "/api/v1/data/{key}"
+    };
+  }
+  
+  // 设置数据接口
+  rpc SetData (SetDataRequest) returns (SetDataReply) {
+    option (google.api.http) = {
+      post: "/api/v1/data"
+      body: "*"
+    };
+  }
+
+  // 健康检查接口
+  rpc HealthCheck (HealthCheckRequest) returns (HealthCheckReply) {
+    option (google.api.http) = {
+      get: "/health"
+    };
+  }
+}
+
+message GetDataRequest {
+  string key = 1;
+}
+
+message GetDataReply {
+  string key = 1;
+  string value = 2;
+  string source = 3; // "cache" or "database"
+  string pod = 4; // 容器IP地址，用于观察负载均衡
+}
+
+message SetDataRequest {
+  string key = 1;
+  string value = 2;
+}
+
+message SetDataReply {
+  bool success = 1;
+  string message = 2;
+}
+
+message HealthCheckRequest {
+}
+
+message HealthCheckReply {
+  string status = 1;
+  string timestamp = 2;
+  string version = 3;
+}
